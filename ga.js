@@ -1,7 +1,8 @@
 function nextGeneration() {
   console.log('next generation');
   calculateFitness();
-  for (let i = 0; i < TOTAL_SNAKES; i++) {
+  let r = random(TOTAL_SNAKES - 100, TOTAL_SNAKES + 100); 
+  for (let i = 0; i < r; i++) {
     snakes[i] = pickOne();
   }
   savedSnakes = [];

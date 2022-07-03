@@ -65,7 +65,7 @@ class Snake {
     }
     return false;
   }
-  
+
   checkMove(x, y) {
     if (x > w - 1 || x < 0 || y > h - 1 || y < 0) {
       return 0;
@@ -78,7 +78,7 @@ class Snake {
     }
     return 1;
   }
-  
+
   eat() {
     let x = this.body[this.body.length - 1].x;
     let y = this.body[this.body.length - 1].y;
@@ -88,12 +88,20 @@ class Snake {
     }
     return false;
   }
-
-  show() {
-    for (let i = 0; i < this.body.length; i++) {
-      fill(0);
-      noStroke();
-      rect(this.body[i].x, this.body[i].y, 1, 1);
+  //Display me!
+  show(isLongest) {
+    if (!isLongest) {
+      for (let i = 0; i < this.body.length; i++) {
+        fill(255);
+        noStroke();
+        rect(this.body[i].x, this.body[i].y, 1, 1);
+      }
+    } else {
+      for (let i = 0; i < this.body.length; i++) {
+        fill(0, 255, 0);
+        noStroke();
+        rect(this.body[i].x, this.body[i].y, 1, 1);
+      }
     }
     noStroke();
     fill(255, 0, 0);
@@ -113,66 +121,76 @@ class Snake {
     let isFoodRight = 0;
     let inputs = [];
     if (this.xdir == 1) {
-      canMoveForward = this.checkMove(this.body[this.body.length - 1].x + 1,
-                                 this.body[this.body.length - 1].y);
-      canTurnLeft = this.checkMove(this.body[this.body.length - 1].x,
-                                 this.body[this.body.length - 1].y - 1);
-      canTurnRight = this.checkMove(this.body[this.body.length - 1].x,
-                                 this.body[this.body.length - 1].y + 1);
+      canMoveForward = this.checkMove(
+        this.body[this.body.length - 1].x + 1,
+        this.body[this.body.length - 1].y
+      );
+      canTurnLeft = this.checkMove(
+        this.body[this.body.length - 1].x,
+        this.body[this.body.length - 1].y - 1
+      );
+      canTurnRight = this.checkMove(
+        this.body[this.body.length - 1].x,
+        this.body[this.body.length - 1].y + 1
+      );
     } else if (this.xdir == -1) {
-      canMoveForward = this.checkMove(this.body[this.body.length - 1].x - 1,
-                                 this.body[this.body.length - 1].y);
-      canTurnLeft = this.checkMove(this.body[this.body.length - 1].x,
-                                 this.body[this.body.length - 1].y + 1);
-      canTurnRight = this.checkMove(this.body[this.body.length - 1].x,
-                                 this.body[this.body.length - 1].y - 1);
+      canMoveForward = this.checkMove(
+        this.body[this.body.length - 1].x - 1,
+        this.body[this.body.length - 1].y
+      );
+      canTurnLeft = this.checkMove(
+        this.body[this.body.length - 1].x,
+        this.body[this.body.length - 1].y + 1
+      );
+      canTurnRight = this.checkMove(
+        this.body[this.body.length - 1].x,
+        this.body[this.body.length - 1].y - 1
+      );
     } else if (this.ydir == 1) {
-      canMoveForward = this.checkMove(this.body[this.body.length - 1].x,
-                                 this.body[this.body.length - 1].y + 1);
-      canTurnLeft = this.checkMove(this.body[this.body.length - 1].x + 1,
-                                 this.body[this.body.length - 1].y);
-      canTurnRight = this.checkMove(this.body[this.body.length - 1].x - 1,
-                                 this.body[this.body.length - 1].y);
+      canMoveForward = this.checkMove(
+        this.body[this.body.length - 1].x,
+        this.body[this.body.length - 1].y + 1
+      );
+      canTurnLeft = this.checkMove(
+        this.body[this.body.length - 1].x + 1,
+        this.body[this.body.length - 1].y
+      );
+      canTurnRight = this.checkMove(
+        this.body[this.body.length - 1].x - 1,
+        this.body[this.body.length - 1].y
+      );
     } else {
-      canMoveForward = this.checkMove(this.body[this.body.length - 1].x,
-                                 this.body[this.body.length - 1].y - 1);
-      canTurnLeft = this.checkMove(this.body[this.body.length - 1].x - 1,
-                                 this.body[this.body.length - 1].y);
-      canTurnRight = this.checkMove(this.body[this.body.length - 1].x + 1,
-                                 this.body[this.body.length - 1].y);
+      canMoveForward = this.checkMove(
+        this.body[this.body.length - 1].x,
+        this.body[this.body.length - 1].y - 1
+      );
+      canTurnLeft = this.checkMove(
+        this.body[this.body.length - 1].x - 1,
+        this.body[this.body.length - 1].y
+      );
+      canTurnRight = this.checkMove(
+        this.body[this.body.length - 1].x + 1,
+        this.body[this.body.length - 1].y
+      );
     }
-    
+
     if (this.xdir == 1) {
-      if (this.body[this.body.length - 1].x < this.food.x)
-        isFoodForward = 1;
-      if (this.food.y < this.body[this.body.length - 1].y)
-        isFoodLeft = 1;
-      else
-        isFoodRight = 1;
+      if (this.body[this.body.length - 1].x < this.food.x) isFoodForward = 1;
+      if (this.food.y < this.body[this.body.length - 1].y) isFoodLeft = 1;
+      else isFoodRight = 1;
     } else if (this.xdir == -1) {
-      if (this.body[this.body.length - 1].x > this.food.x)
-        isFoodForward = 1;
-      if (this.food.y > this.body[this.body.length - 1].y)
-        isFoodLeft = 1;
-      else
-        isFoodRight = 1;
+      if (this.body[this.body.length - 1].x > this.food.x) isFoodForward = 1;
+      if (this.food.y > this.body[this.body.length - 1].y) isFoodLeft = 1;
+      else isFoodRight = 1;
     } else if (this.ydir == 1) {
-      if (this.body[this.body.length - 1].y < this.food.y)
-        isFoodForward = 1;
-      if (this.food.x > this.body[this.body.length - 1].x)
-        isFoodLeft = 1;
-      else
-        isFoodRight = 1;
+      if (this.body[this.body.length - 1].y < this.food.y) isFoodForward = 1;
+      if (this.food.x > this.body[this.body.length - 1].x) isFoodLeft = 1;
+      else isFoodRight = 1;
     } else {
-      if (this.body[this.body.length - 1].y > this.food.y)
-        isFoodForward = 1;
-      if (this.food.x < this.body[this.body.length - 1].x)
-        isFoodLeft = 1;
-      else
-        isFoodRight = 1;
+      if (this.body[this.body.length - 1].y > this.food.y) isFoodForward = 1;
+      if (this.food.x < this.body[this.body.length - 1].x) isFoodLeft = 1;
+      else isFoodRight = 1;
     }
-      
-      
 
     inputs[0] = canMoveForward;
     inputs[1] = canTurnLeft;
