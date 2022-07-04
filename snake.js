@@ -14,7 +14,7 @@ class Snake {
     if (brain) {
       this.brain = brain.copy();
     } else {
-      this.brain = new NeuralNetwork(6, 6, 2);
+      this.brain = new NeuralNetwork(6, 6, 3);
     }
   }
 
@@ -200,31 +200,31 @@ class Snake {
     inputs[5] = isFoodRight;
     let output = this.brain.predict(inputs);
     if (this.xdir == 1) {
-      if (output[0] > output[1]) {
+      if ((output[0] > output[1]) && (output[0] > output[2])) {
         this.setDir(0, -1);
       }
-      if (output[0] < output[1]) {
+      if ((output[1] > output[0]) && (output[1] > output[2])) {
         this.setDir(0, 1);
       }
     } else if (this.xdir == -1) {
-      if (output[0] > output[1]) {
+      if ((output[0] > output[1]) && (output[0] > output[2])) {
         this.setDir(0, 1);
       }
-      if (output[0] < output[1]) {
+      if ((output[1] > output[0]) && (output[1] > output[2])) {
         this.setDir(0, -1);
       }
     } else if (this.ydir == 1) {
-      if (output[0] > output[1]) {
+      if ((output[0] > output[1]) && (output[0] > output[2])) {
         this.setDir(1, 0);
       }
-      if (output[0] < output[1]) {
+      if ((output[1] > output[0]) && (output[1] > output[2])) {
         this.setDir(-1, 0);
       }
     } else {
-      if (output[0] > output[1]) {
+      if ((output[0] > output[1]) && (output[0] > output[2])) {
         this.setDir(-1, 0);
       }
-      if (output[0] < output[1]) {
+      if ((output[1] > output[0]) && (output[1] > output[2])) {
         this.setDir(1, 0);
       }
     }
