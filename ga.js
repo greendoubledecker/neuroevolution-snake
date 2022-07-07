@@ -1,5 +1,6 @@
 function nextGeneration() {
   console.log('next generation');
+  frames = 0;
   calculateFitness();
   let r = random(TOTAL_SNAKES - 100, TOTAL_SNAKES + 100); 
   for (let i = 0; i < r; i++) {

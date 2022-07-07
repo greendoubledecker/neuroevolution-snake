@@ -11,6 +11,7 @@ let longest;
 let longestEver;
 //Whether you only show the longest
 let state = false;
+let frames = 0;
 
 function setup() {
   createCanvas(windowWidth, windowHeight - 30);
@@ -43,10 +44,27 @@ function draw() {
   scale(rez);
   background(0);
   frameRate(frameRateSlider.value());
+  frames ++;
   let current;
   for (let snake of snakes) {
     if (snake.body.length > longest.body.length) {
       longest = snake;
+    }
+  }
+  let counter = 0;
+  if (frames > 720){
+    let counter = 0;
+    for (let snake of snakes){
+      if (snake.body.length <= longestEver.body.length / 4){
+        counter ++;
+      }
+    }
+    if (counter >= 10){
+      for (let i = snakes.length - 1; i > 0; i--){
+        savedSnakes.push(snakes[i]);
+        snakes.splice(i, 1);
+      }
+      nextGeneration();
     }
   }
   for (let i = snakes.length - 1; i >= 0; i--) {
